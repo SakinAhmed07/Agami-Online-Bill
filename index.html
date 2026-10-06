@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="bn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আগামী ইন্টারনেট - কম্প্যাক্ট বিলিং রসিদ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Hind Siliguri', 'Inter', sans-serif;
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        /* Editable Input & Span Styles */
+        
+        .editable-field {
+            border-bottom: 1px dotted #cbd5e1;
+            transition: all 0.2s ease;
+        }
+        
+        .editable-field:hover {
+            border-bottom: 1px dashed #008037;
+            background-color: #f0fdf4;
+        }
+        
+        .editable-field:focus {
+            outline: none;
+            border-bottom: 1.5px solid #008037;
+            background-color: #dcfce7;
+        }
+        /* Print CSS for perfect single-page output */
+        
+        @media print {
+            body {
+                background-color: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-area {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            .receipt-card {
+                box-shadow: none !important;
+                border: 1.5px solid #008037 !important;
+                margin-bottom: 12px !important;
+                padding: 12px 16px !important;
+                page-break-inside: avoid;
+            }
+            input,
+            select {
+                border: none !important;
+                outline: none !important;
+                background: transparent !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="p-2 md:p-6 min-h-screen flex flex-col items-center">
+
+    <!-- Control Bar (Hidden on Print) -->
+    <div class="no-print w-full max-w-4xl bg-white p-3 rounded-xl shadow-md mb-4 flex flex-wrap justify-between items-center gap-3 border-t-4 border-[#008037]">
+        <div class="flex items-center gap-2">
+            <span class="p-1.5 bg-green-100 rounded-lg text-[#008037]">
+                <i class="fa-solid fa-compress text-lg"></i>
+            </span>
+            <div>
+                <h1 class="text-base font-bold text-gray-800">আগামী ইন্টারনেট - কম্প্যাক্ট প্রিন্ট রসিদ</h1>
+                <p class="text-[11px] text-gray-500">এক পাতায় সহজে প্রিন্ট করার জন্য ছোট ও পরিচ্ছন্ন লেআউট।</p>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+            <button onclick="toggleDualReceipt()" class="bg-emerald-100 hover:bg-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 border border-emerald-300">
+                <i class="fa-solid fa-copy"></i> <span id="dual-btn-text">২টি কপি ডুপ্লিকেট করুন (কাস্টমার + অফিস)</span>
+            </button>
+            <button onclick="window.print()" class="bg-[#008037] hover:bg-green-800 text-white text-xs font-bold px-4 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+                <i class="fa-solid fa-print"></i> Print / Save PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- Printable Receipt Wrapper -->
+    <div id="print-area" class="print-area w-full max-w-4xl space-y-4">
+
+        <!-- Receipt Instance 1 (Customer Copy) -->
+        <div class="receipt-card bg-white p-4 md:p-5 rounded-xl shadow-md border-2 border-[#008037] relative">
+
+            <!-- Top Strip Header -->
+            <div class="flex justify-between items-center pb-2 border-b border-gray-200 text-[10px] text-gray-500">
+                <span class="font-bold text-[#008037] uppercase bg-green-50 px-2 py-0.5 rounded border border-green-200" id="copy-tag-1">
+                    [ কাস্টমার কপি / CUSTOMER COPY ]
+                </span>
+                <span>ট্র্যাকিং আইডি: <strong contenteditable="true" class="editable-field text-gray-800">AGM-202610-884</strong></span>
+            </div>
+
+            <!-- Main Header -->
+            <div class="flex justify-between items-center py-2 border-b-2 border-green-600">
+                <!-- Logo & Brand Info -->
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 flex-shrink-0 border border-green-300 rounded-lg p-0.5 bg-white">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><circle cx='100' cy='100' r='75' fill='none' stroke='%23008037' stroke-width='14'/><path d='M 65 140 C 65 90, 85 65, 100 65 C 115 65, 135 90, 135 140' fill='none' stroke='%23008037' stroke-width='14' stroke-linecap='round'/><path d='M 75 110 L 125 110' fill='none' stroke='%23008037' stroke-width='10' stroke-linecap='round'/><circle cx='122' cy='78' r='22' fill='%23e11d48'/><path d='M 140 50 A 30 30 0 0 1 170 80' fill='none' stroke='%23008037' stroke-width='10' stroke-linecap='round'/><path d='M 152 38 A 45 45 0 0 1 185 71' fill='none' stroke='%23008037' stroke-width='9' stroke-linecap='round'/></svg>"
+                            alt="আগামী ইন্টারনেট" class="w-full h-full object-contain">
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-extrabold text-[#008037] leading-tight outline-none editable-field" contenteditable="true">
+                            আগামী ইন্টারনেট
+                        </h2>
+                        <p class="text-[11px] text-gray-600 leading-tight">
+                            সদর রোড, গোসাইরহাট বাজার, গোসাইরহাট, শরীয়তপুর।
+                        </p>
+                        <p class="text-[11px] font-semibold text-gray-800">
+                            মোবাইল: <span contenteditable="true" class="editable-field">01650-000082, 01716-083787</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Invoice Badge & Dates -->
+                <div class="text-right">
+                    <span class="bg-[#008037] text-white text-xs font-bold px-3 py-1 rounded inline-block mb-1">
+                        মাসিক বিল রসিদ
+                    </span>
+                    <p class="text-[11px] text-gray-700"><b>রসিদ নং:</b> <span contenteditable="true" class="editable-field font-bold">INV-1004</span></p>
+                    <p class="text-[11px] text-gray-700"><b>তারিখ:</b> <span contenteditable="true" class="editable-field" id="current-date-1">03 Oct 2026</span></p>
+                </div>
+            </div>
+
+            <!-- Customer Details Grid (Compact 2 Rows) -->
+            <div class="my-2 p-2 bg-green-50/50 rounded-md border border-green-100 text-xs grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div>
+                    <span class="text-gray-500 block text-[10px]">গ্রাহকের নাম:</span>
+                    <strong contenteditable="true" class="editable-field text-gray-900 block">মোঃ রাজিব হোসেন</strong>
+                </div>
+                <div>
+                    <span class="text-gray-500 block text-[10px]">কাস্টমার আইডি:</span>
+                    <strong contenteditable="true" class="editable-field text-emerald-800 block">AGAMI-8842</strong>
+                </div>
+                <div>
+                    <span class="text-gray-500 block text-[10px]">মোবাইল:</span>
+                    <span contenteditable="true" class="editable-field text-gray-900 font-medium block">01712-345678</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 block text-[10px]">বিলিং মাস:</span>
+                    <strong contenteditable="true" class="editable-field text-gray-900 block">অক্টোবর ২০২৬</strong>
+                </div>
+            </div>
+
+            <!-- Billing Items Table (Compact) -->
+            <table class="w-full text-xs text-left border-collapse border border-green-200 mt-2">
+                <thead>
+                    <tr class="bg-[#008037] text-white text-[11px]">
+                        <th class="border border-green-700 p-1 text-center w-8">নং</th>
+                        <th class="border border-green-700 p-1">বিবরণ / সেবার নাম</th>
+                        <th class="border border-green-700 p-1 text-center w-20">স্পিড</th>
+                        <th class="border border-green-700 p-1 text-right w-24">টাকা (৳)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-b border-gray-200">
+                        <td class="border border-gray-200 p-1 text-center">1</td>
+                        <td class="border border-gray-200 p-1 font-medium" contenteditable="true">মাসিক ইন্টারনেট বিল (ফাইবার আনলিমিটেড)</td>
+                        <td class="border border-gray-200 p-1 text-center font-bold text-emerald-700" contenteditable="true">20 Mbps</td>
+                        <td class="border border-gray-200 p-1 text-right">
+                            <input type="number" id="mrc-1" value="500" oninput="calc(1)" class="w-16 text-right outline-none font-bold">
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200">
+                        <td class="border border-gray-200 p-1 text-center">2</td>
+                        <td class="border border-gray-200 p-1 text-gray-600" contenteditable="true">অন্যান্য / সংযোগ চার্জ (OTC)</td>
+                        <td class="border border-gray-200 p-1 text-center text-gray-400">-</td>
+                        <td class="border border-gray-200 p-1 text-right">
+                            <input type="number" id="otc-1" value="0" oninput="calc(1)" class="w-16 text-right outline-none">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Calculation Row -->
+            <div class="mt-2 flex justify-between items-center text-xs pt-1">
+                <div class="space-y-1">
+                    <p class="text-gray-600"><b>পেমেন্ট মেথড:</b> <span contenteditable="true" class="editable-field">bKash</span></p>
+                    <p class="text-gray-600"><b>স্ট্যাটাস:</b> <span class="px-2 py-0.5 bg-green-100 text-green-800 text-[10px] font-bold rounded border border-green-300">PAID (পরিশোধিত)</span></p>
+                </div>
+
+                <div class="text-right space-y-0.5">
+                    <div class="text-gray-600">ছাড় / Discount: ৳<input type="number" id="disc-1" value="0" oninput="calc(1)" class="w-12 text-right border-b outline-none"></div>
+                    <div class="text-sm font-black text-[#008037] pt-1 border-t border-green-600">
+                        মোট আদায়: <span id="total-1">500.00</span> ৳
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signatures Section -->
+            <div class="mt-4 pt-2 border-t border-dashed border-gray-300 flex justify-between items-end text-[10px] text-gray-600">
+                <div class="text-center w-28 border-t border-gray-400 pt-0.5">গ্রাহকের স্বাক্ষর</div>
+                <div class="text-center w-32 border-t border-gray-400 pt-0.5 font-bold text-gray-800">অনুমোদিত স্বাক্ষর (আগামী ইন্টারনেট)</div>
+            </div>
+        </div>
+
+        <!-- Optional Second Copy Container (Hidden by default, toggled with button) -->
+        <div id="office-copy-wrapper" class="hidden">
+            <div class="border-b-2 border-dashed border-gray-400 my-4 relative text-center">
+                <span class="bg-white px-2 text-[10px] text-gray-400 -top-2 relative">এখানে কাটুন (Cut Here)</span>
+            </div>
+
+            <div id="office-copy-content"></div>
+        </div>
+
+    </div>
+
+    <!-- Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const today = new Date();
+            const formatted = today.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric'
+            });
+            document.getElementById('current-date-1').innerText = formatted;
+            calc(1);
+        });
+
+        function calc(id) {
+            const mrc = parseFloat(document.getElementById(`mrc-${id}`).value) || 0;
+            const otc = parseFloat(document.getElementById(`otc-${id}`).value) || 0;
+            const disc = parseFloat(document.getElementById(`disc-${id}`).value) || 0;
+
+            const grandTotal = Math.max(0, (mrc + otc) - disc);
+            document.getElementById(`total-${id}`).innerText = grandTotal.toFixed(2);
+        }
+
+        let isDual = false;
+
+        function toggleDualReceipt() {
+            const wrapper = document.getElementById('office-copy-wrapper');
+            const btnText = document.getElementById('dual-btn-text');
+            const target = document.getElementById('office-copy-content');
+
+            isDual = !isDual;
+            if (isDual) {
+                wrapper.classList.remove('hidden');
+                btnText.innerText = "১টি একক কপির লেআউটে ফিরে যান";
+
+                // Clone first copy for Office Copy
+                const firstCopy = document.querySelector('.receipt-card').outerHTML;
+                target.innerHTML = firstCopy;
+
+                // Update copy tag label in second receipt
+                const copyTag2 = target.querySelector('#copy-tag-1');
+                if (copyTag2) {
+                    copyTag2.innerText = "[ অফিস কপি / OFFICE COPY ]";
+                    copyTag2.className = "font-bold text-blue-800 uppercase bg-blue-50 px-2 py-0.5 rounded border border-blue-200";
+                }
+            } else {
+                wrapper.classList.add('hidden');
+                target.innerHTML = "";
+                btnText.innerText = "২টি কপি ডুপ্লিকেট করুন (কাস্টমার + অফিস)";
+            }
+        }
+    </script>
+</body>
+
+</html>
